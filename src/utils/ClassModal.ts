@@ -1,0 +1,33 @@
+import { 
+    ModalBuilder, 
+    TextInputBuilder, 
+    TextInputStyle, 
+    ActionRowBuilder,
+    StringSelectMenuBuilder
+} from "discord.js";
+
+const modalOptions: StringSelectMenuBuilder = new StringSelectMenuBuilder()
+.setCustomId("class_select")
+.setPlaceholder("Escolha sua classe!")
+.setMinValues(1)
+.setMaxValues(1)
+.addOptions([
+    {
+      label: "Guerreiro",
+      value: "warrior",
+      description: "Alta defesa, sempre fica na linha de frente."
+    },
+    {
+      label: "Mago",
+      value: "mage",
+      description: "Invoca magias instáveis e perigosas."
+    },
+    {
+      label: "Bobo da corte",
+      value: "joker",
+      description: "Puro caos, nunca se sabe o que acontecerá em seus turnos."
+    }
+])
+
+export const classModal = new ActionRowBuilder<StringSelectMenuBuilder>()
+.addComponents(modalOptions)

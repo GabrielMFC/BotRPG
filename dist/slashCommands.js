@@ -1,9 +1,15 @@
 import { REST, Routes } from "discord.js";
 import "dotenv/config";
-const commands = [{
-        name: 'start',
-        description: 'Initialize the game.'
-    }];
+const commands = [
+    {
+        name: "start",
+        description: "Initialize the game."
+    },
+    {
+        name: "classmodal",
+        description: "Displays the class modal if the game has been previously initialized."
+    }
+];
 if (!process.env.TOKEN) {
     throw new Error("The TOKEN enviroment varrible is " + typeof (!process.env.TOKEN) + ". It must to be a string!");
 }
@@ -12,7 +18,7 @@ if (!process.env.APP_ID) {
 }
 const token = process.env.TOKEN;
 const appId = process.env.APP_ID;
-const rest = new REST({ version: '10' }).setToken(token);
+const rest = new REST({ version: "10" }).setToken(token);
 try {
     console.log("Started refreshing app (/) commands.");
     await rest.put(Routes.applicationCommands(appId), { body: commands });

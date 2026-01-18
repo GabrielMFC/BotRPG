@@ -34,33 +34,17 @@ catch (error) {
 }
 const game = new Game();
 game.setState(new PreGame);
-client.on(Events.ClientReady, readyClient => {
-    console.log(`Logged in as ${readyClient.user.tag}.`);
+client.once(Events.ClientReady, () => {
+    console.log(`Logged!`);
 });
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand())
         return;
-    if (interaction.commandName === 'start') {
-        await interaction.reply(game.onMessage());
+    if (interaction.commandName === "start") {
+        await game.onMessage(interaction);
     }
-});
-client.on("messageCreate", (message) => {
-    if (message.author.bot)
-        return;
-    if (!message.inGuild())
-        return;
-    const channel = message.channel;
-    const players = new Set();
-    const collector = channel.createMessageCollector({
-        filter: msg => msg.content == "!eu" && !msg.author.bot,
-        time: 10_000
-    });
-    collector.on("collect", (msg) => {
-        players.add(msg.author.id);
-        console.log(`Player ${msg.author.id} has been added!`);
-    });
-    collector.on("end", () => {
-        console.log("Jogadores: ", [...players]);
-    });
+    if (interaction.commandName === "classmodal") {
+        await game.onMessage(interaction);
+    }
 });
 client.login(process.env.TOKEN);
