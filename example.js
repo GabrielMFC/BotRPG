@@ -1,6 +1,7 @@
-const axios = require("axios")
-const {Client, GatewayIntentBits, Options, Role} = require("discord.js")
-require("dotenv").config()
+import axios from "axios"
+import { Client, GatewayIntentBits, Options, Role } from "discord.js"
+import "dotenv/config"
+
 const apikey = process.env.APIKEY
 
 const client = new Client({
@@ -18,7 +19,7 @@ async function request(chatMessage) {
         const requestData = await axios.post(
             "https://api.cohere.ai/v1/chat",
             {
-                model: "command-r-plus",
+                model: "command-a-03-2025",
                 message: chatMessage,
                 chat_history: history,
                 temperature: 0.7,
