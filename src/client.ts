@@ -1,8 +1,7 @@
 import axios from "axios";
 import { Client, Message, Events, GatewayIntentBits, TextChannel, ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 import "dotenv/config"
-import {Game, PreGame } from "./states/game.js";
-import { classModal } from "./utils/ClassModal.js";
+import { commandHandlers } from "./utils/commandHandler.js";
 
 const client:Client = new Client({
     intents: [
@@ -40,22 +39,20 @@ try {
     console.error(error);
 }
 
-const game = new Game()
-game.setState(new PreGame)
-
 client.once(Events.ClientReady, () => {
     console.log(`Logged!`);
 })
 
 client.on(Events.InteractionCreate, async interaction => {
-    if(!interaction.isChatInputCommand()) return
+    if (!interaction.isChatInputCommand()) return;
 
-    if(interaction.commandName === "start") {
-        await game.onMessage(interaction)
+    const handler = commandHandlers[interaction.commandName];
+    if (handler) {
+        await handler(interaction);
+    } else {
+        console.log(`Comando não registrado: ${interaction.commandName}`);
     }
-    if(interaction.commandName === "classmodal") {
-        await game.onMessage(interaction)
-    }
-})
+});
+
 
 client.login(process.env.TOKEN)

@@ -11,7 +11,7 @@ export function collectPlayers(channel, duration) {
         });
         collector.on("end", () => {
             resolve(players);
-            console.log(`Players list: ${players}`);
+            console.log(`Players list: ${[...players].join(', ')}`);
         });
     });
 }

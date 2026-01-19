@@ -20,7 +20,7 @@ export function collectPlayers(
 
     collector.on("end", () => {
       resolve(players)
-      console.log(`Players list: ${players}`);
+      console.log(`Players list: ${[...players].join(', ')}`);
     })
   })
 }

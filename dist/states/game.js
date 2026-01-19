@@ -1,18 +1,15 @@
 import startingMessages from "../gameMessages/starting/messages.js";
 import { collectPlayers } from "../utils/playersCollector.js";
-import { classModal } from "../utils/ClassModal.js";
 class Game {
     state;
     numberOfPlayers;
-    players = {
-        playerId: "",
-        class: ""
-    };
+    pendingPlayersIds = [];
+    players = [];
     setState(state) {
         this.state = state;
     }
-    onMessage(param) {
-        return this.state.onMessage(this, param);
+    onInteract(param) {
+        return this.state.onInteract(this, param);
     }
 }
 class ChoosingPlayers {
@@ -30,29 +27,22 @@ class StartPlayersColector {
     async stateAct(ctx, param) {
         const players = await collectPlayers(param, 10_000);
         for (const playerId of players) {
-            ctx.players.playerId = playerId;
+            ctx.pendingPlayersIds.push(playerId);
         }
     }
     isFinished(ctx) {
-        return ctx.players ? true : false;
+        return ctx.pendingPlayersIds.length == 4;
     }
     next() {
         return new ChoosingPlayersClasses();
     }
 }
 class ChoosingPlayersClasses {
-    async stateAct(ctx, param) {
-        await param.reply(startingMessages.choosePlayerClasses);
-        await param.followUp({
-            content: "Choose your class:",
-            components: [
-                classModal
-            ],
-            ephemeral: true
-        });
+    async stateAct(ctx) {
+        return startingMessages.choosePlayerClasses;
     }
     isFinished(ctx) {
-        return ctx.players.class ? true : false;
+        return ctx.pendingPlayersIds.length < 5;
     }
     next() {
         return null;
@@ -60,7 +50,7 @@ class ChoosingPlayersClasses {
 }
 class PreGame {
     substate = new ChoosingPlayers();
-    onMessage(ctx, param) {
+    onInteract(ctx, param) {
         const result = this.substate.stateAct(ctx, param);
         if (this.substate.isFinished(ctx)) {
             const next = this.substate.next();

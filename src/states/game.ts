@@ -1,9 +1,9 @@
-import { TextChannel, ChatInputCommandInteraction } from "discord.js"
+import { TextChannel } from "discord.js"
 import startingMessages from "../gameMessages/starting/messages.js"
 import { collectPlayers } from "../utils/playersCollector.js"
 
 interface GameState {
-    onMessage(ctx: Game, param: any): any
+    onInteract(ctx: Game, param: any): any
 }
 
 interface PreGameState {
@@ -24,13 +24,13 @@ class Game {
         this.state = state
     }
 
-    onMessage(param?: any){
-        return this.state.onMessage(this, param)
+    onInteract(param?: any){
+        return this.state.onInteract(this, param)
     }
 }
 
 class ChoosingPlayers implements PreGameState {
-    stateAct(ctx: Game, ): string {
+    stateAct(ctx: Game): string {
         return startingMessages.chooseNumberOfPlayers
     }
 
@@ -77,7 +77,7 @@ class ChoosingPlayersClasses implements PreGameState {
 class PreGame implements GameState {
     private substate: PreGameState = new ChoosingPlayers()
 
-    onMessage(ctx: Game, param?: unknown): any {
+    onInteract(ctx: Game, param?: unknown): any {
         const result = this.substate.stateAct(ctx, param)
 
         if (this.substate.isFinished(ctx)) {
@@ -91,7 +91,7 @@ class PreGame implements GameState {
             }
         }
 
-        return result   
+        return result
     }
 }
 

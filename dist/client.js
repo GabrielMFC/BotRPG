@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import "dotenv/config";
-import { Game, PreGame } from "./states/game.js";
+import { commandHandlers } from "./utils/commandHandler.js";
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -32,19 +32,18 @@ try {
 catch (error) {
     console.error(error);
 }
-const game = new Game();
-game.setState(new PreGame);
 client.once(Events.ClientReady, () => {
     console.log(`Logged!`);
 });
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand())
         return;
-    if (interaction.commandName === "start") {
-        await game.onMessage(interaction);
+    const handler = commandHandlers[interaction.commandName];
+    if (handler) {
+        await handler(interaction);
     }
-    if (interaction.commandName === "classmodal") {
-        await game.onMessage(interaction);
+    else {
+        console.log(`Comando não registrado: ${interaction.commandName}`);
     }
 });
 client.login(process.env.TOKEN);
