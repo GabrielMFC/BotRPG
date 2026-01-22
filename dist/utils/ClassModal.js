@@ -7,7 +7,7 @@ const modalOptions = new StringSelectMenuBuilder()
     .addOptions([
     {
         label: "Guerreiro",
-        value: "warrior",
+        value: "guerreiro",
         description: "Alta defesa, sempre fica na linha de frente."
     },
     {

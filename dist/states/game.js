@@ -2,22 +2,24 @@ import startingMessages from "../gameMessages/starting/messages.js";
 import { collectPlayers } from "../utils/playersCollector.js";
 class Game {
     state;
-    numberOfPlayers;
+    maxPlayers = 4;
+    minPlayers = 1;
     pendingPlayersIds = [];
-    players = [];
+    heroes = [];
     setState(state) {
         this.state = state;
     }
-    onInteract(param) {
-        return this.state.onInteract(this, param);
+    async onInteract(param) {
+        return await this.state.onInteract(this, param);
     }
 }
 class ChoosingPlayers {
     stateAct(ctx) {
+        console.log("Current state: ChoosingPlayers");
         return startingMessages.chooseNumberOfPlayers;
     }
     isFinished(ctx) {
-        return typeof ctx.numberOfPlayers === "number";
+        return typeof ctx.maxPlayers === "number" && typeof ctx.minPlayers === "number";
     }
     next() {
         return new StartPlayersColector();
@@ -25,13 +27,17 @@ class ChoosingPlayers {
 }
 class StartPlayersColector {
     async stateAct(ctx, param) {
+        console.log("Current state: StartPlayersColector");
         const players = await collectPlayers(param, 10_000);
         for (const playerId of players) {
             ctx.pendingPlayersIds.push(playerId);
         }
     }
     isFinished(ctx) {
-        return ctx.pendingPlayersIds.length == 4;
+        if (typeof ctx.maxPlayers === "number" && typeof ctx.minPlayers === "number") {
+            return ctx.pendingPlayersIds.length >= ctx.minPlayers && ctx.pendingPlayersIds.length <= ctx.maxPlayers;
+        }
+        return ctx.pendingPlayersIds.length > 0;
     }
     next() {
         return new ChoosingPlayersClasses();
@@ -39,10 +45,11 @@ class StartPlayersColector {
 }
 class ChoosingPlayersClasses {
     async stateAct(ctx) {
+        console.log("Current state: ChoosingPlayersClasses");
         return startingMessages.choosePlayerClasses;
     }
     isFinished(ctx) {
-        return ctx.pendingPlayersIds.length < 5;
+        return true;
     }
     next() {
         return null;
@@ -50,8 +57,8 @@ class ChoosingPlayersClasses {
 }
 class PreGame {
     substate = new ChoosingPlayers();
-    onInteract(ctx, param) {
-        const result = this.substate.stateAct(ctx, param);
+    async onInteract(ctx, param) {
+        const result = await this.substate.stateAct(ctx, param);
         if (this.substate.isFinished(ctx)) {
             const next = this.substate.next();
             if (next && "stateAct" in next) {
@@ -64,4 +71,6 @@ class PreGame {
         return result;
     }
 }
-export { Game, PreGame };
+const game = new Game();
+game.setState(new PreGame);
+export { game };

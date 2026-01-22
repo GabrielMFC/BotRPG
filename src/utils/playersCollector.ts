@@ -15,7 +15,7 @@ export function collectPlayers(
 
     collector.on("collect", m => {
       players.add(m.author.id)
-      console.log(`Player ${m.author.id} has been added!`);
+      channel.send(`O jogador ${m.author.displayName} entrou no jogo.`)
     })
 
     collector.on("end", () => {

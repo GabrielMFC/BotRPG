@@ -3,39 +3,47 @@ import startingMessages from "../gameMessages/starting/messages.js"
 import { collectPlayers } from "../utils/playersCollector.js"
 
 interface GameState {
-    onInteract(ctx: Game, param: any): any
+    onInteract(ctx: Game, param?: any): Promise<any>
 }
 
 interface PreGameState {
-    stateAct(ctx: Game, param?: any): any
+    stateAct(ctx: Game, param?: any): Promise<any> | any
     isFinished(ctx: Game): boolean
     next(): PreGameState | GameState | null
+}
+
+type Hero = {
+    id: string
+    displayName: string
+    class: string
 }
 
 class Game {
     state!: GameState
 
-    numberOfPlayers?: number
+    maxPlayers: number = 4
+    minPlayers: number = 1
     pendingPlayersIds: string[] = []
-    players: Array<{ playerId: string; class?: string }> = []
+    heroes: Hero[] = []
 
 
     setState(state: GameState) {
         this.state = state
     }
 
-    onInteract(param?: any){
-        return this.state.onInteract(this, param)
+    async onInteract(param?: any){
+        return await this.state.onInteract(this, param)
     }
 }
 
 class ChoosingPlayers implements PreGameState {
     stateAct(ctx: Game): string {
+        console.log("Current state: ChoosingPlayers");
         return startingMessages.chooseNumberOfPlayers
     }
 
     isFinished(ctx: Game): boolean {
-        return typeof ctx.numberOfPlayers === "number"
+        return typeof ctx.maxPlayers === "number" &&  typeof ctx.minPlayers === "number"
     }
 
     next(): PreGameState | null {
@@ -45,6 +53,8 @@ class ChoosingPlayers implements PreGameState {
 
 class StartPlayersColector implements PreGameState {
     async stateAct(ctx: Game, param: TextChannel) {
+        console.log("Current state: StartPlayersColector");
+        
         const players = await collectPlayers(param,10_000)
         for(const playerId of players){
             ctx.pendingPlayersIds.push(playerId)
@@ -52,7 +62,10 @@ class StartPlayersColector implements PreGameState {
     }
 
     isFinished(ctx: Game): boolean {
-        return ctx.pendingPlayersIds.length == 4
+        if(typeof ctx.maxPlayers === "number" && typeof ctx.minPlayers === "number"){
+            return ctx.pendingPlayersIds.length >= ctx.minPlayers && ctx.pendingPlayersIds.length <= ctx.maxPlayers
+        }
+        return ctx.pendingPlayersIds.length > 0
     }
 
     next(): PreGameState | null {
@@ -62,11 +75,12 @@ class StartPlayersColector implements PreGameState {
 
 class ChoosingPlayersClasses implements PreGameState {
     async stateAct(ctx: Game) {
+        console.log("Current state: ChoosingPlayersClasses");
         return startingMessages.choosePlayerClasses
     }
 
     isFinished(ctx: Game): boolean {
-        return ctx.pendingPlayersIds.length < 5
+        return true
     }
 
     next(): PreGameState | null {
@@ -77,8 +91,8 @@ class ChoosingPlayersClasses implements PreGameState {
 class PreGame implements GameState {
     private substate: PreGameState = new ChoosingPlayers()
 
-    onInteract(ctx: Game, param?: unknown): any {
-        const result = this.substate.stateAct(ctx, param)
+    async onInteract(ctx: Game, param?: unknown): Promise<any> {
+        const result = await this.substate.stateAct(ctx, param)
 
         if (this.substate.isFinished(ctx)) {
             const next = this.substate.next()
@@ -95,4 +109,7 @@ class PreGame implements GameState {
     }
 }
 
-export {Game,PreGame}
+const game = new Game()
+game.setState(new PreGame)
+
+export {game}

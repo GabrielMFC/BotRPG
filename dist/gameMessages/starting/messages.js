@@ -1,7 +1,7 @@
 const chooseNumberOfPlayers = "📢 **Atenção, aventureiros!**\n" +
     "Antes de tudo, certifiquem-se de que suas **mensagens diretas estão habilitadas** e que **todos os jogadores estão no mesmo servidor** onde o RPG será jogado.\n\n" +
     "🎲 **Olá, aventureiro!**\n" +
-    "Se você quiser entrar nesta campanha, digite !eu no chat.\n" +
+    "**Se você quiser entrar nesta campanha, digite !eu no chat.**\n\n" +
     "**ATENÇÃO: HÁ UM LIMITE DE 4 JOGADORES POR CAMPANHA!**";
 const choosePlayerClasses = "2️⃣ **ESCOLHA SUA CLASSE!**\n\n" +
     "**Classes disponíveis:**\n\n" +
