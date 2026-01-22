@@ -12,12 +12,12 @@ const modalOptions = new StringSelectMenuBuilder()
     },
     {
         label: "Mago",
-        value: "mage",
+        value: "mago",
         description: "Invoca magias instáveis e perigosas."
     },
     {
         label: "Bobo da corte",
-        value: "joker",
+        value: "bobo",
         description: "Puro caos, nunca se sabe o que acontecerá em seus turnos."
     }
 ]);
