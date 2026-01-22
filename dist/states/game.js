@@ -73,4 +73,4 @@ class PreGame {
 }
 const game = new Game();
 game.setState(new PreGame);
-export { game };
+export { game, Game };
