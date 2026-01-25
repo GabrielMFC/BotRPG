@@ -1,10 +1,10 @@
 import { ChatInputCommandInteraction, TextChannel } from "discord.js";
-import {game} from "../states/game.js";
+import {Game} from "../states/gameStates/Game.js";
 import { classModal } from "./ClassModal.js";
 
 
 const commandHandlers: any = {
-    start: async (interaction: ChatInputCommandInteraction) => {
+    start: async (interaction: ChatInputCommandInteraction, game:Game) => {
         try {
             console.log("Start", interaction.id, Date.now());
             
@@ -18,10 +18,10 @@ const commandHandlers: any = {
 
             const chooseClassMessage = await game.onInteract()
 
-            interaction.channel.send(chooseClassMessage)
+            await interaction.channel.send(chooseClassMessage)
 
             await interaction.followUp({
-                content: chooseClassMessage ?? "Escolha sua class!",
+                content: "Escolha sua classe!",
                 components: [classModal]
             })
         } catch (error) {

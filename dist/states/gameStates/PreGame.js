@@ -1,18 +1,5 @@
-import startingMessages from "../gameMessages/starting/messages.js";
-import { collectPlayers } from "../utils/playersCollector.js";
-class Game {
-    state = new PreGame;
-    maxPlayers = 4;
-    minPlayers = 1;
-    pendingPlayersIds = [];
-    heroes = [];
-    setState(state) {
-        this.state = state;
-    }
-    async onInteract(param) {
-        return await this.state.onInteract(this, param);
-    }
-}
+import { startingMessages } from "../../gameMessages/starting/messages.js";
+import { collectPlayers } from "../../utils/playersCollector.js";
 class ChoosingPlayers {
     stateAct(ctx) {
         console.log("Current state: ChoosingPlayers");
@@ -26,9 +13,9 @@ class ChoosingPlayers {
     }
 }
 class StartPlayersColector {
-    async stateAct(ctx, param) {
+    async stateAct(ctx, channel) {
         console.log("Current state: StartPlayersColector");
-        const players = await collectPlayers(param, 10_000);
+        const players = await collectPlayers(channel, 10_000);
         for (const playerId of players) {
             ctx.pendingPlayersIds.push(playerId);
         }
@@ -71,4 +58,4 @@ class PreGame {
         return result;
     }
 }
-export { Game };
+export { PreGame };

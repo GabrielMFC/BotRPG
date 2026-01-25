@@ -4,10 +4,6 @@ const commands = [
     {
         name: "start",
         description: "Initialize the game."
-    },
-    {
-        name: "classmodal",
-        description: "Displays the class modal if the game has been previously initialized."
     }
 ];
 if (!process.env.TOKEN) {

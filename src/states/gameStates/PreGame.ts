@@ -1,10 +1,7 @@
+import { Game, GameState } from "./Game.js"
 import { TextChannel } from "discord.js"
-import startingMessages from "../gameMessages/starting/messages.js"
-import { collectPlayers } from "../utils/playersCollector.js"
-
-interface GameState {
-    onInteract(ctx: Game, param?: any): Promise<any>
-}
+import {startingMessages} from "../../gameMessages/starting/messages.js"
+import { collectPlayers } from "../../utils/playersCollector.js"
 
 interface PreGameState {
     stateAct(ctx: Game, param?: any): Promise<any> | any
@@ -12,29 +9,6 @@ interface PreGameState {
     next(): PreGameState | GameState | null
 }
 
-type Hero = {
-    id: string
-    displayName: string
-    class: string
-}
-
-class Game {
-    state!: GameState
-
-    maxPlayers: number = 4
-    minPlayers: number = 1
-    pendingPlayersIds: string[] = []
-    heroes: Hero[] = []
-
-
-    setState(state: GameState) {
-        this.state = state
-    }
-
-    async onInteract(param?: any){
-        return await this.state.onInteract(this, param)
-    }
-}
 
 class ChoosingPlayers implements PreGameState {
     stateAct(ctx: Game): string {
@@ -52,10 +26,10 @@ class ChoosingPlayers implements PreGameState {
 }
 
 class StartPlayersColector implements PreGameState {
-    async stateAct(ctx: Game, param: TextChannel) {
+    async stateAct(ctx: Game, channel: TextChannel) {
         console.log("Current state: StartPlayersColector");
         
-        const players = await collectPlayers(param,10_000)
+        const players = await collectPlayers(channel, 10_000)
         for(const playerId of players){
             ctx.pendingPlayersIds.push(playerId)
         }
@@ -109,7 +83,4 @@ class PreGame implements GameState {
     }
 }
 
-const game = new Game()
-game.setState(new PreGame)
-
-export {game, Game}
+export {PreGame}

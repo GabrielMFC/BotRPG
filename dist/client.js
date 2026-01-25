@@ -1,6 +1,7 @@
 import { Client, Events, GatewayIntentBits, TextChannel } from "discord.js";
 import { commandHandlers } from "./utils/commandHandler.js";
-import { game } from "./states/game.js";
+import { Game } from "./states/gameStates/Game.js";
+import "dotenv/config";
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -11,12 +12,13 @@ const client = new Client({
 client.once(Events.ClientReady, () => {
     console.log(`Logged!`);
 });
+const game = new Game;
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand())
         return;
     const handler = commandHandlers[interaction.commandName];
     if (handler) {
-        await handler(interaction);
+        await handler(interaction, game);
     }
     else {
         console.log(`Comando não registrado: ${interaction.commandName}`);
@@ -39,9 +41,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         });
         return;
     }
-    const displayName = interaction.member && "displayName" in interaction.member
-        ? interaction.member.displayName
-        : interaction.user.username;
+    const displayName = interaction.user.displayName;
     const existing = game.heroes.find(p => p.id === userId);
     if (existing) {
         existing.class = chosenClass;
