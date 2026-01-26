@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "app": "node ./dist/client.js",
+    "app": "node ./dist/index.js",
     "slash": "node ./dist/slashCommands.js"
   },
   "author": "Gabriel Matias",
