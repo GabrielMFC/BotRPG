@@ -6,18 +6,18 @@ const chooseNumberOfPlayers = "📢 **Atenção, aventureiros!**\n" +
 const choosePlayerClasses = "**ESCOLHA SUA CLASSE!**\n\n" +
     "**Classes disponíveis:**\n\n" +
     "⚔️ **Guerreiro**\n" +
-    "Resistente e valente, sofre **-3 na rolagem de ferimentos**. Ideal para quem enfrenta o perigo de frente(`!guerreiro`)!\n\n" +
+    "Resistente e valente, sofre **-3 na rolagem de ferimentos**. Ideal para quem enfrenta o perigo de frente!\n\n" +
     "🔮 **Mago**\n" +
-    "Pode conjurar **qualquer feitiço que imaginar**. A IA reagirá dinamicamente, criando efeitos únicos e caóticos. Criatividade é sua arma(`!mago`)!\n\n" +
+    "Pode conjurar **qualquer feitiço que imaginar**. A IA reagirá dinamicamente, criando efeitos únicos e caóticos. Criatividade é sua arma!\n\n" +
     "🎭 **Bobo da Corte**\n" +
-    "Caótico e imprevisível. Em todas as ações, joga **1d20 + 1d5**. O total define sucesso ou falha. Ideal para quem gosta de viver no limite(`!bobo`)!\n\n";
+    "Caótico e imprevisível. Em todas as ações, joga **1d20 + 1d5**. O total define sucesso ou falha. Ideal para quem gosta de viver no limite!\n\n";
 const initialComment = [
     {
         commentType: "positive",
         commentList: [
             "Um honrado(a) e valente herói, será que conseguirá livrar esta terra do mal?",
             "Grave este nome, surgiram lendas de seus feitos.",
-            "Essa pessoa tem nome de vencedor(a)!",
+            "Você tem nome de vencedor(a)!",
             "É difícil vê-lo(a) com todo seu brihlo.",
             "Esse RPG é jogo de criança para você!"
         ]

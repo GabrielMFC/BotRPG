@@ -1,7 +1,8 @@
 import { Client, Message, Events, GatewayIntentBits, TextChannel } from "discord.js";
-import { commandHandlers } from "./utils/commandHandler.js";
-import { Game } from "./states/gameStates/Game.js";
+import { commandHandlers } from "./utils/commandHandler.ts";
+import { Game } from "./states/Game.ts";
 import "dotenv/config"
+import { HeroBuilder } from "./utils/HeroBuilder.ts";
 
 const client:Client = new Client({
     intents: [
@@ -37,10 +38,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
     await interaction.deferUpdate()
 
-    const chosenClass = interaction.values[0]
-    const userId = interaction.user.id
+    const hero = new HeroBuilder(interaction).getHero()
 
-    if (!game.pendingPlayersIds.includes(userId)) {
+    if (!game.pendingPlayersIds.includes(hero.id)) {
       await interaction.followUp({
         content: "Você não está na lista de jogadores desse pré-jogo.",
         ephemeral: true
@@ -48,19 +48,17 @@ client.on(Events.InteractionCreate, async (interaction) => {
       return
     }
 
-    const displayName = interaction.user.displayName
-
-    const existing = game.heroes.find(p => p.id === userId)
+    const existing = game.heroes.find(p => p.id === hero.id)
     if (existing) {
-      existing.class = chosenClass
+      existing.class = hero.class
     } else {
-      game.heroes.push({ id: userId, displayName, class: chosenClass })
+      game.heroes.push({ id: hero.id, displayName: hero.displayName, class: hero.class, body: hero.body})
     }
 
-    game.pendingPlayersIds = game.pendingPlayersIds.filter(id => id !== userId)
+    game.pendingPlayersIds = game.pendingPlayersIds.filter(id => id !== hero.id)
 
     await interaction.followUp({
-      content: `✅ <@${userId}> escolheu **${chosenClass[0].toUpperCase() + chosenClass.slice(1)}**.`,
+      content: `✅ @${hero.displayName} escolheu **${hero.class[0].toUpperCase() + hero.class.slice(1)}**.`,
       ephemeral: false
     })
 

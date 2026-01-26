@@ -1,4 +1,4 @@
-import { Game } from "../states/gameStates/Game.js"
+import { Game } from "../states/Game.js"
 
 const rules = {
     light: "- Descreva o ambiente com detalhes sensoriais (luz, clima, sons, cheiro).",

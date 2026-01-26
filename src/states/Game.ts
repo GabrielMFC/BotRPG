@@ -1,13 +1,35 @@
-import { PreGame } from "./PreGame.js"
+import { PreGame } from "./gameStates/PreGame.ts"
 
 interface GameState {
     onInteract(ctx: Game, param?: any): Promise<any>
 }
 
+type HeroBody = {
+    eyes: {
+        injured: boolean,
+        injuredAmmount: number
+    },
+    neck: {
+        injured: boolean
+    },
+    arms: {
+        injured: boolean,
+        injuredAmmount: number
+    },
+    belly: {
+        injured: boolean,
+    },
+    legs: {
+        injured: boolean,
+        injuredAmmount: number
+    }
+}
+
 type Hero = {
     id: string
     displayName: string
-    class: string
+    class: string,
+    body: HeroBody
 }
 
 class Game {
@@ -29,4 +51,4 @@ class Game {
 }
 
 
-export {Game, GameState}
+export {Game, GameState, Hero, HeroBody}

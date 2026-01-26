@@ -19,7 +19,7 @@ const initialComment = [
         commentList: [
         "Um honrado(a) e valente herói, será que conseguirá livrar esta terra do mal?",
         "Grave este nome, surgiram lendas de seus feitos.",
-        "Essa pessoa tem nome de vencedor(a)!",
+        "Você tem nome de vencedor(a)!",
         "É difícil vê-lo(a) com todo seu brihlo.",
         "Esse RPG é jogo de criança para você!"
     ]},

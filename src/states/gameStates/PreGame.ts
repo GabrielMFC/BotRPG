@@ -1,4 +1,4 @@
-import { Game, GameState } from "./Game.js"
+import { Game, GameState } from "../Game.js"
 import { TextChannel } from "discord.js"
 import {startingMessages} from "../../gameMessages/starting/messages.js"
 import { collectPlayers } from "../../utils/playersCollector.js"

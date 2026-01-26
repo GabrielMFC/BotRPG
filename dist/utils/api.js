@@ -1,4 +1,4 @@
-import { Game } from "../states/gameStates/Game.js";
+import { Game } from "../states/Game.js";
 import { getStartingPrompt } from "../promptBuilder/basePrompts.js";
 import axios from "axios";
 import "dotenv/config";
