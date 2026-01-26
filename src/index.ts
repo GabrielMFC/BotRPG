@@ -1,8 +1,8 @@
 import { Client, Message, Events, GatewayIntentBits, TextChannel } from "discord.js";
-import { commandHandlers } from "./utils/commandHandler.ts";
-import { Game } from "./states/Game.ts";
+import { commandHandlers } from "./utils/commandHandler.js";
+import { Game } from "./states/Game.js";
 import "dotenv/config"
-import { HeroBuilder } from "./utils/HeroBuilder.ts";
+import { HeroBuilder } from "./utils/HeroBuilder.js";
 
 const client:Client = new Client({
     intents: [

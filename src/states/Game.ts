@@ -1,4 +1,4 @@
-import { PreGame } from "./gameStates/PreGame.ts"
+import { PreGame } from "./gameStates/PreGame.js"
 
 interface GameState {
     onInteract(ctx: Game, param?: any): Promise<any>

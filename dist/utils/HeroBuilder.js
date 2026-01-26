@@ -1,9 +1,6 @@
 class HeroBuilder {
     interaction;
     constructor(interaction) {
-        if (!interaction.isStringSelectMenu()) {
-            return;
-        }
         this.interaction = interaction;
     }
     getPlayerId() {

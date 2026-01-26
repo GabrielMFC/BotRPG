@@ -18,21 +18,26 @@ const initialComment = [
         commentType: "positive", 
         commentList: [
         "Um honrado(a) e valente herói, será que conseguirá livrar esta terra do mal?",
-        "Grave este nome, surgiram lendas de seus feitos.",
+        "Grave este nome, surgirão lendas de seus feitos.",
         "Você tem nome de vencedor(a)!",
         "É difícil vê-lo(a) com todo seu brihlo.",
-        "Esse RPG é jogo de criança para você!"
+        "Esse RPG é jogo de criança para você!",
+        "Sinto muito, esse jogo não tem um modo mais difícil para as suas lendárias habilidades.",
+        "Você será um aventureiro implacável!",
+        "Os seus lendários feitos ecoarão por todos os cantos deste mundo."
     ]},
     {
         commentType: "negative", 
         commentList: [
-        "Não é muito, mas já serve.", 
-        "Um pobre coitado(a).",
+        "Você não é muito, mas você poderá servir de escudo humano para os outros.",
         "Será que você morrerá primeiro?",
-        "Você parece um iniciante.",
-        "É melhor do que nada.",
-        "Não me parece que você viverá por muito tempo.",
-        "Eu sei que vai ser difícil para você, mas tente se concentrar."
+        "Você tem cheiro de um novato recém-nascido.",
+        "Eh, eu acho que jogar com você é melhor do que jogar com uma pessoa a menos",
+        "Não me parece que você sobreviverá por muito tempo nesta campanha.",
+        "Eu sei que será difícil para você, mas tente se concentrar.",
+        "Você é digno de pena.",
+        "Sinto muito, esse jogo não tem um modo mais fácil para você.",
+        "Eu tenho pena dos seus companheiros, os pobres coitados terão que lhe carregar no campo de batalha."
     ]}
 ]
 

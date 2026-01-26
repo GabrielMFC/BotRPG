@@ -1,5 +1,5 @@
 import { StringSelectMenuInteraction } from "discord.js";
-import { Hero, HeroBody } from "../states/Game.ts";
+import { Hero, HeroBody } from "../states/Game.js";
 
 class HeroBuilder {
     private interaction!: StringSelectMenuInteraction
