@@ -20,9 +20,13 @@ dentro da plataforma Discord, usando uma API de IA.
 > Imediatamente após o jogador usar o comando de inicio de jogo, o bot irá perguntar quais 
 jogadores iram participar do jogo e também dará alguns avisos, como: quantidade máxima de 
 jogadores, recomendação de notificações ativadas e o comando necessário para entrar na 
-campanha(!eu). Conforme os jogadores forem entrando na campanha usando o comando !eu, o bot
+campanha(!eu). 
+
+> Conforme os jogadores forem entrando na campanha usando o comando !eu, o bot
 irá dizer no chat o nome do jogador que entrou, juntamente com um comentário que poderá 
-ser um elogio ou uma zoação desmerecendo o mesmo. O fluxo do Pre Game será assim:
+ser um elogio ou uma zoação desmerecendo o mesmo.
+
+> Após o jogador ter entrado para a lista, aparecerá um menu para que ele escolha sua classe. O fluxo do Pre Game será assim:
 
     /start > seleção de jogadores > comentário do bot > seleção de classes.
 
@@ -63,7 +67,7 @@ nível vencendo batalhas.
 
 > No turno dos inimigos após ele atacar, seŕa lançado um dado 1d20 e se o valor desse dado 
 for maior que 15, será causado um ferimento com base no valor. Ferimentos causam efeitos 
-negativosque perduram por toda a campanha do jogador. Abaixo segue uma lista dos ferimentos 
+negativos que perduram por toda a campanha do jogador. Abaixo segue uma lista dos ferimentos 
 e seus efeitos negativos:
 
 **Barriga(16)**: Ferimentos na barriga fazem o jogador perder um pouco de vida após cada 
