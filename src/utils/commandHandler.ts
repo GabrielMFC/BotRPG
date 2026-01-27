@@ -27,7 +27,7 @@ const commandHandlers: any = {
         } catch (error) {
             console.log(error);
         }
-    },
+    }
 };
 
 export {commandHandlers}

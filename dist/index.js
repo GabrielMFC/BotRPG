@@ -1,6 +1,7 @@
 import { Client, Events, GatewayIntentBits, TextChannel } from "discord.js";
 import { commandHandlers } from "./utils/commandHandler.js";
 import { Game } from "./states/Game.js";
+import { InGame } from "./states/gameStates/InGame.js";
 import "dotenv/config";
 import { HeroBuilder } from "./utils/HeroBuilder.js";
 const client = new Client({
@@ -55,6 +56,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
     });
     if (game.pendingPlayersIds.length === 0 && interaction.channel instanceof TextChannel) {
         await interaction.channel?.send("🎉 Todos escolheram! Iniciando o jogo...");
+        game.setState(new InGame);
     }
+});
+client.on("messageCreate", (message) => {
+    if (message.author.bot)
+        return;
+    if (!message.content.startsWith("!") || message.content == "!eu")
+        return;
+    game.onInteract(message.channel);
 });
 client.login(process.env.TOKEN);

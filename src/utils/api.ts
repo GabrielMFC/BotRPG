@@ -1,42 +1,85 @@
-// import { Game } from "../states/Game.js";
-// import { getStartingPrompt } from "../promptBuilder/basePrompts.js";
-// import axios from "axios";
-// import "dotenv/config"
+import { Game } from "../states/Game.js";
+import { getStartingPrompt, initialLocationPrompt } from "../promptBuilder/basePrompts.js";
+import axios from "axios";
+import "dotenv/config"
 
-// const game2 = new Game()
-// const id = "12838"
-// const name = "Gabriel"
-// const className = "Mago"
 
-// game2.heroes.push({id:id,displayName:name,class:className})
+class IaAPI {
+    // private lightRule?: boolean
+    // private ambientRule?: boolean
+    // private initialEventRule?: boolean
+    // private maxCharacters?: number
 
-// async function iaApiRequest(game: Game) {
-//     try {
-//         if (!process.env.URL || !process.env.APIKEY) {
-//             throw new Error(`The API URL or APIKEY is ${typeof (process.env.URL)}.It must to be a string!`);
-//         }
-//         const response = await axios.post(
-//             "https://api.cohere.ai/v1/chat",
-//             {
-//                 model: "command-a-03-2025",
-//                 message: getStartingPrompt(game, false, false, false),
-//                 temperature: 0.7,
-//                 max_tokens: 400,
-//                 prompt_truncation: "auto"
-//             },
-//             {
-//                 headers: {
-//                     'Authorization': `Bearer ${process.env.APIKEY}`,
-//                     'Content-Type': 'application/json'
-//                 }
-//             }
-//         );
-//         console.log(response.data);
-//     }catch(error){
-//         console.error(error);
-//     }
-// }
+    // constructor(
+    //     lightRule: boolean, 
+    //     ambientRule:boolean,
+    //     initialEventRule: boolean,
+    //     maxCharacters: number
+    // ){
+    //     this.lightRule = lightRule,
+    //     this.ambientRule = ambientRule,
+    //     this.initialEventRule = initialEventRule
+    //     this.maxCharacters = maxCharacters
+    // }
 
-// iaApiRequest(game2)
+    private async axiosRequest(prompt: unknown) {
+        try {
+            if (!process.env.URL || !process.env.APIKEY) {
+                throw new Error(`The API URL or APIKEY is ${typeof (process.env.URL)}.It must to be a string!`);
+            }
+            const response = await axios.post(
+                "https://api.cohere.ai/v1/chat",
+                {
+                    model: "command-a-03-2025",
+                    message: prompt,
+                    temperature: 0.7,
+                    max_tokens: 400,
+                    prompt_truncation: "auto"
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.APIKEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            return response.data.text
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
-// export {iaApiRequest}
+    async getInitialLocation() {
+        return await this.axiosRequest(initialLocationPrompt)
+    }
+
+
+    // async iaApiRequest(game: Game) {
+    //     try {
+    //         if (!process.env.URL || !process.env.APIKEY) {
+    //             throw new Error(`The API URL or APIKEY is ${typeof (process.env.URL)}.It must to be a string!`);
+    //         }
+    //         const response = await axios.post(
+    //             "https://api.cohere.ai/v1/chat",
+    //             {
+    //                 model: "command-a-03-2025",
+    //                 message: getStartingPrompt(game, this.lightRule, this.ambientRule, this.initialEventRule, this.maxCharacters),
+    //                 temperature: 0.7,
+    //                 max_tokens: 400,
+    //                 prompt_truncation: "auto"
+    //             },
+    //             {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${process.env.APIKEY}`,
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             }
+    //         );
+    //         return response.data.text
+    //     }catch(error){
+    //         console.error(error);
+    //     }
+    // }
+}
+
+export {IaAPI}

@@ -20,6 +20,6 @@ const commandHandlers = {
         catch (error) {
             console.log(error);
         }
-    },
+    }
 };
 export { commandHandlers };
