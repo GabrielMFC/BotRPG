@@ -1,9 +1,10 @@
 import { Client, Events, GatewayIntentBits, TextChannel } from "discord.js";
 import { commandHandlers } from "./utils/commandHandler.js";
-import { Game } from "./states/Game.js";
+import { Game } from "./states/gameStates/Game.js";
 import { InGame } from "./states/gameStates/InGame.js";
 import "dotenv/config";
-import { HeroBuilder } from "./utils/HeroBuilder.js";
+import { HeroFactory } from "./factory/HeroFactory.js";
+import { CampaignStore } from "./store/CampaignStore.js";
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -14,7 +15,8 @@ const client = new Client({
 client.once(Events.ClientReady, () => {
     console.log(`Logged!`);
 });
-const game = new Game;
+const campaignStorage = new CampaignStore;
+const game = new Game(campaignStorage);
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand())
         return;
@@ -34,7 +36,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         return;
     }
     await interaction.deferUpdate();
-    const hero = new HeroBuilder(interaction).getHero();
+    const hero = await new HeroFactory(interaction).getHero();
     if (!game.pendingPlayersIds.includes(hero.id)) {
         await interaction.followUp({
             content: "Você não está na lista de jogadores desse pré-jogo.",
@@ -47,7 +49,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         existing.class = hero.class;
     }
     else {
-        game.heroes.push({ id: hero.id, displayName: hero.displayName, class: hero.class, body: hero.body });
+        game.updateHero(hero);
     }
     game.pendingPlayersIds = game.pendingPlayersIds.filter(id => id !== hero.id);
     await interaction.followUp({
@@ -57,6 +59,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (game.pendingPlayersIds.length === 0 && interaction.channel instanceof TextChannel) {
         await interaction.channel?.send("🎉 Todos escolheram! Iniciando o jogo...");
         game.setState(new InGame);
+        game.startCampaign(interaction.channelId, game);
+        console.log(hero);
     }
 });
 client.on("messageCreate", (message) => {

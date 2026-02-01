@@ -1,28 +1,11 @@
-import { Game } from "../states/Game.js";
-import { getStartingPrompt, initialLocationPrompt } from "../promptBuilder/basePrompts.js";
+import { initialLocationPrompt } from "../promptBuilder/basePrompts.js";
 import axios from "axios";
 import "dotenv/config"
 
 
 class IaAPI {
-    // private lightRule?: boolean
-    // private ambientRule?: boolean
-    // private initialEventRule?: boolean
-    // private maxCharacters?: number
 
-    // constructor(
-    //     lightRule: boolean, 
-    //     ambientRule:boolean,
-    //     initialEventRule: boolean,
-    //     maxCharacters: number
-    // ){
-    //     this.lightRule = lightRule,
-    //     this.ambientRule = ambientRule,
-    //     this.initialEventRule = initialEventRule
-    //     this.maxCharacters = maxCharacters
-    // }
-
-    private async axiosRequest(prompt: unknown) {
+    private static async axiosRequest(prompt: unknown) {
         try {
             if (!process.env.URL || !process.env.APIKEY) {
                 throw new Error(`The API URL or APIKEY is ${typeof (process.env.URL)}.It must to be a string!`);
@@ -34,7 +17,7 @@ class IaAPI {
                     message: prompt,
                     temperature: 0.7,
                     max_tokens: 400,
-                    prompt_truncation: "auto"
+                    prompt_truncation: "auto",
                 },
                 {
                     headers: {
@@ -49,8 +32,8 @@ class IaAPI {
         }
     }
 
-    async getInitialLocation() {
-        return await this.axiosRequest(initialLocationPrompt)
+    static async getInitialLocation(){
+        return await IaAPI.axiosRequest(initialLocationPrompt)
     }
 
 

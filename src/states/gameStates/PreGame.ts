@@ -1,7 +1,7 @@
-import { Game, GameState } from "../Game.js"
+import { Game, GameState } from "./Game.js"
 import { TextChannel } from "discord.js"
 import {startingMessages} from "../../gameMessages/starting/messages.js"
-import { collectPlayers } from "../../utils/playersCollector.js"
+import { Colletor } from "../../utils/playersCollector.js"
 
 interface PreGameState {
     stateAct(ctx: Game, param?: any): Promise<any> | any
@@ -29,7 +29,7 @@ class StartPlayersColector implements PreGameState {
     async stateAct(ctx: Game, channel: TextChannel) {
         console.log("Current state: StartPlayersColector");
         
-        const players = await collectPlayers(channel, 10_000)
+        const players = await Colletor.preGameStartingColletor(channel, 10_000)
         for(const playerId of players){
             ctx.pendingPlayersIds.push(playerId)
         }

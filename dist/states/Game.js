@@ -5,6 +5,9 @@ class Game {
     minPlayers = 1;
     pendingPlayersIds = [];
     heroes = [];
+    updateHero(hero) {
+        this.heroes.push(hero);
+    }
     setState(state) {
         this.state = state;
     }

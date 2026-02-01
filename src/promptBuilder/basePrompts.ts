@@ -1,4 +1,4 @@
-import { Game } from "../states/Game.js"
+import { Game } from "../states/gameStates/Game.js"
 
 const rules = {
     light: "- Descreva o ambiente com detalhes sensoriais (luz, clima, sons, cheiro).",
@@ -6,7 +6,7 @@ const rules = {
     initialEvent: "- Inclua um gancho inicial (algo estranho, perigoso ou curioso no local).",
 
 }
-const initialLocationPrompt = "Me dê um nome de um lugar fantasioso de RPG, somente o nome e entre parênteses o que é esse lugar."
+const initialLocationPrompt = "Me dê um nome de um lugar aleatório fantasioso de RPG. A sua resposta deve conter somente o nome do lugar e entre parênteses o que é esse lugar."
 function getStartingPrompt(game: Game, lightRule?:boolean, ambientRule?:boolean, initialEventRule?:boolean, maxCharacters?: number) {
   const classes = game.heroes.map(h => h.class).join(', ')
   const plural = game.heroes.length > 1

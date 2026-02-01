@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, TextChannel } from "discord.js";
-import {Game} from "../states/Game.js";
+import {Game} from "../states/gameStates/Game.js";
 import { classModal } from "./ClassModal.js";
 
 

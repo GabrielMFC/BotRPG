@@ -1,5 +1,5 @@
 import { startingMessages } from "../../gameMessages/starting/messages.js";
-import { collectPlayers } from "../../utils/playersCollector.js";
+import { Colletor } from "../../utils/playersCollector.js";
 class ChoosingPlayers {
     stateAct(ctx) {
         console.log("Current state: ChoosingPlayers");
@@ -15,7 +15,7 @@ class ChoosingPlayers {
 class StartPlayersColector {
     async stateAct(ctx, channel) {
         console.log("Current state: StartPlayersColector");
-        const players = await collectPlayers(channel, 10_000);
+        const players = await Colletor.preGameStartingColletor(channel, 10_000);
         for (const playerId of players) {
             ctx.pendingPlayersIds.push(playerId);
         }

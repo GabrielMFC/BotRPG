@@ -1,4 +1,4 @@
-import { InProgress } from "./campaignStates/InProgress.js";
+import { InProgress } from "./InProgress.js";
 class Campaign {
     state = new InProgress;
     heroes;
