@@ -1,13 +1,14 @@
-import { InProgress } from "./InProgress.js"
+import { NotStarted } from "./notStarted.js"
 import { Hero } from "../gameStates/Game.js"
+import { TextChannel } from "discord.js"
 
 interface CampaignState {
-    stateAct(param: unknown):void
+    stateAct(campaign: Campaign | CampaignState, channel: TextChannel):void
 }
 
 class Campaign implements CampaignState{
-    state: CampaignState = new InProgress
-    private heroes: Hero[]
+    state: CampaignState = new NotStarted
+    heroes: Hero[]
 
     constructor(heroes: Hero[]){
         this.heroes = heroes
@@ -17,8 +18,8 @@ class Campaign implements CampaignState{
         this.state = state
     }
 
-    stateAct(param: any): void {
-        this.state.stateAct(param)
+    stateAct(campaign: Campaign, channel: TextChannel): void {
+        this.state.stateAct(campaign, channel)
     }
 }
 

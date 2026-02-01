@@ -1,6 +1,6 @@
-import { InProgress } from "./InProgress.js";
+import { NotStarted } from "./notStarted.js";
 class Campaign {
-    state = new InProgress;
+    state = new NotStarted;
     heroes;
     constructor(heroes) {
         this.heroes = heroes;
@@ -8,8 +8,8 @@ class Campaign {
     setstate(state) {
         this.state = state;
     }
-    stateAct(param) {
-        this.state.stateAct(param);
+    stateAct(campaign, channel) {
+        this.state.stateAct(campaign, channel);
     }
 }
 export { Campaign };

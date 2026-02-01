@@ -1,7 +1,8 @@
-import CampaignFactory from "../../factory/CampaignFactory.js";
+import { StartingCampaign } from "../campaignStates/StartingCampaign.js";
 class InGame {
     async onInteract(ctx) {
-        return CampaignFactory.createFromGame(ctx);
+        ctx.setstate(new StartingCampaign);
+        ctx.stateAct();
     }
 }
 export { InGame };

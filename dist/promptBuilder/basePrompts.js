@@ -3,10 +3,10 @@ const rules = {
     ambient: "- Apresente o local como se fosse a primeira cena de uma história.",
     initialEvent: "- Inclua um gancho inicial (algo estranho, perigoso ou curioso no local).",
 };
-const initialLocationPrompt = "Me dê um nome de um lugar aleatório fantasioso de RPG. A sua resposta deve conter somente o nome do lugar e entre parênteses o que é esse lugar.";
-function getStartingPrompt(game, lightRule, ambientRule, initialEventRule, maxCharacters) {
-    const classes = game.heroes.map(h => h.class).join(', ');
-    const plural = game.heroes.length > 1;
+const initialLocationPrompt = "Me dê um nome de um lugar aleatório fantasioso de RPG. A sua resposta deve conter somente o nome do lugar e entre parênteses o que é esse lugar. O nome entre parêntese deve ser curto e direto em sua definição";
+function getStartingPrompt(heroes, lightRule, ambientRule, initialEventRule, maxCharacters) {
+    const classes = heroes.map(h => h.class).join(', ');
+    const plural = heroes.length > 1;
     return `
     Você é um narrador de RPG de fantasia medieval.
 
@@ -19,4 +19,11 @@ function getStartingPrompt(game, lightRule, ambientRule, initialEventRule, maxCh
     ${initialEventRule ? rules.initialEvent : ""}
     `.trim();
 }
-export { getStartingPrompt, initialLocationPrompt };
+function getPrompt(hero) {
+    return `
+  Você é um narrador de RPG de fantasia medieval.
+  
+  Com base no heroí de classe ${hero.class} e em sua posição ${hero.location}. Crie uma situação
+  fantasiosa que poderia acontecer em um rpg de mesa classíco.`;
+}
+export { getStartingPrompt, initialLocationPrompt, getPrompt };

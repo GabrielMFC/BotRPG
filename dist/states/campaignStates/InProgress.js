@@ -1,6 +1,6 @@
 class InProgress {
-    async stateAct(channel) {
-        //
+    stateAct(campaign) {
+        console.log("InProgress");
     }
 }
 export { InProgress };

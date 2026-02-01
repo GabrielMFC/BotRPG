@@ -1,10 +1,9 @@
-import CampaignFactory from "../../factory/CampaignFactory.js"
 import { Hero } from "../../factory/HeroFactory.js"
-import { CampaignStore } from "../../store/CampaignStore.js"
+import { Campaign } from "../campaignStates/Campaign.js"
 import { PreGame } from "./PreGame.js"
 
 interface GameState {
-    onInteract(ctx: Game, param?: any): Promise<any>
+    onInteract(ctx: Game | Campaign, param?: any): Promise<any>
 }
 
 type HeroBody = {
@@ -37,15 +36,8 @@ class Game {
     pendingPlayersIds: string[] = []
     heroes: Hero[] = []
 
-    constructor(private store: CampaignStore) {}
-
     updateHero(hero:Hero){
         this.heroes.push(hero)
-    }
-
-    startCampaign(channelId: string, game: Game){
-        const campaign = CampaignFactory.createFromGame(game)
-        this.store.save(channelId, campaign)
     }
 
     setState(state: GameState) {

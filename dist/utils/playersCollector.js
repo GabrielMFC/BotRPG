@@ -20,5 +20,20 @@ class Colletor {
             });
         });
     }
+    static playersInteractionMessageCollector(channel, duration) {
+        var playersInteractions;
+        return new Promise(resolve => {
+            const collector = channel.createMessageCollector({
+                filter: (m) => m.content.startsWith("!") && !m.author.bot,
+                time: duration
+            });
+            collector.on("collect", m => {
+                playersInteractions.push({ playerId: m.author.id, interaction: m.content });
+            });
+            collector.on("end", () => {
+                resolve(playersInteractions);
+            });
+        });
+    }
 }
 export { Colletor };

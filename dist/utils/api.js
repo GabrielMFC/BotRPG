@@ -1,4 +1,4 @@
-import { initialLocationPrompt } from "../promptBuilder/basePrompts.js";
+import { getPrompt, getStartingPrompt, initialLocationPrompt } from "../promptBuilder/basePrompts.js";
 import axios from "axios";
 import "dotenv/config";
 class IaAPI {
@@ -27,6 +27,12 @@ class IaAPI {
     }
     static async getInitialLocation() {
         return await IaAPI.axiosRequest(initialLocationPrompt);
+    }
+    static async getInitialHistory(heroes) {
+        return await IaAPI.axiosRequest(getStartingPrompt(heroes));
+    }
+    static async getHistory(hero) {
+        return await IaAPI.axiosRequest(getPrompt(hero));
     }
 }
 export { IaAPI };

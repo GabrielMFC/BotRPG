@@ -1,4 +1,5 @@
-import { initialLocationPrompt } from "../promptBuilder/basePrompts.js";
+import { getPrompt, getStartingPrompt, initialLocationPrompt } from "../promptBuilder/basePrompts.js";
+import { Game, Hero } from "../states/gameStates/Game.js";
 import axios from "axios";
 import "dotenv/config"
 
@@ -36,33 +37,13 @@ class IaAPI {
         return await IaAPI.axiosRequest(initialLocationPrompt)
     }
 
+    static async getInitialHistory(heroes: Hero[]){
+        return await IaAPI.axiosRequest(getStartingPrompt(heroes))
+    }
 
-    // async iaApiRequest(game: Game) {
-    //     try {
-    //         if (!process.env.URL || !process.env.APIKEY) {
-    //             throw new Error(`The API URL or APIKEY is ${typeof (process.env.URL)}.It must to be a string!`);
-    //         }
-    //         const response = await axios.post(
-    //             "https://api.cohere.ai/v1/chat",
-    //             {
-    //                 model: "command-a-03-2025",
-    //                 message: getStartingPrompt(game, this.lightRule, this.ambientRule, this.initialEventRule, this.maxCharacters),
-    //                 temperature: 0.7,
-    //                 max_tokens: 400,
-    //                 prompt_truncation: "auto"
-    //             },
-    //             {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${process.env.APIKEY}`,
-    //                     'Content-Type': 'application/json'
-    //                 }
-    //             }
-    //         );
-    //         return response.data.text
-    //     }catch(error){
-    //         console.error(error);
-    //     }
-    // }
+    static async getHistory(hero: Hero){
+        return await IaAPI.axiosRequest(getPrompt(hero))
+    }
 }
 
 export {IaAPI}

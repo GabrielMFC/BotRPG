@@ -1,4 +1,4 @@
-import { Game } from "../states/gameStates/Game.js"
+import { Hero } from "../states/gameStates/Game.js"
 
 const rules = {
     light: "- Descreva o ambiente com detalhes sensoriais (luz, clima, sons, cheiro).",
@@ -6,10 +6,10 @@ const rules = {
     initialEvent: "- Inclua um gancho inicial (algo estranho, perigoso ou curioso no local).",
 
 }
-const initialLocationPrompt = "Me dê um nome de um lugar aleatório fantasioso de RPG. A sua resposta deve conter somente o nome do lugar e entre parênteses o que é esse lugar."
-function getStartingPrompt(game: Game, lightRule?:boolean, ambientRule?:boolean, initialEventRule?:boolean, maxCharacters?: number) {
-  const classes = game.heroes.map(h => h.class).join(', ')
-  const plural = game.heroes.length > 1
+const initialLocationPrompt = "Me dê um nome de um lugar aleatório fantasioso de RPG. A sua resposta deve conter somente o nome do lugar e entre parênteses o que é esse lugar. O nome entre parêntese deve ser curto e direto em sua definição"
+function getStartingPrompt(heroes: Hero[], lightRule?:boolean, ambientRule?:boolean, initialEventRule?:boolean, maxCharacters?: number) {
+  const classes = heroes.map(h => h.class).join(', ')
+  const plural = heroes.length > 1
 
     return `
     Você é um narrador de RPG de fantasia medieval.
@@ -24,4 +24,12 @@ function getStartingPrompt(game: Game, lightRule?:boolean, ambientRule?:boolean,
     `.trim()
 }
 
-export {getStartingPrompt, initialLocationPrompt}
+function getPrompt(hero: Hero): string {
+  return `
+  Você é um narrador de RPG de fantasia medieval.
+  
+  Com base no heroí de classe ${hero.class} e em sua posição ${hero.location}. Crie uma situação
+  fantasiosa que poderia acontecer em um rpg de mesa classíco.`
+}
+
+export {getStartingPrompt, initialLocationPrompt, getPrompt}
