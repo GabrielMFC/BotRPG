@@ -2,6 +2,7 @@ import { getPrompt, getStartingPrompt, initialLocationPrompt } from "../promptBu
 import { Game, Hero } from "../states/gameStates/Game.js";
 import axios from "axios";
 import "dotenv/config"
+import { TurnActions } from "../types/turnActions.js";
 
 
 class IaAPI {
@@ -41,8 +42,8 @@ class IaAPI {
         return await IaAPI.axiosRequest(getStartingPrompt(heroes))
     }
 
-    static async getHistory(hero: Hero, historyContext: string, action: string){
-        return await IaAPI.axiosRequest(getPrompt(hero, historyContext, action))
+    static async getHistory(actions: TurnActions, historyContext: string){
+        return await IaAPI.axiosRequest(getPrompt(actions, historyContext))
     }
 }
 

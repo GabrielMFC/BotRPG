@@ -5,6 +5,7 @@ import "dotenv/config"
 import { HeroFactory } from "./factory/HeroFactory.js";
 import { Campaign } from "./states/campaignStates/Campaign.js";
 import { StartingCampaign } from "./states/campaignStates/StartingCampaign.js";
+import { PlayerRotation } from "./states/campaignStates/PlayerRotation.js";
 
 const client:Client = new Client({
     intents: [
@@ -70,7 +71,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (game.pendingPlayersIds.length === 0 && interaction.channel instanceof TextChannel) {
       await interaction.channel?.send("🎉 Todos escolheram! Iniciando o jogo...")
       campaign.setstate(new StartingCampaign)
-      campaign.stateAct(campaign, interaction.channel)
+      interaction.channel.send("Quando estiver pronto, digite !pronto no chat.")
     }
   }
 )

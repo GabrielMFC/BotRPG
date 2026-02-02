@@ -1,4 +1,5 @@
 import { Hero } from "../states/gameStates/Game.js"
+import { TurnActions } from "../types/turnActions.js"
 
 const rules = {
     light: "- Descreva o ambiente com detalhes sensoriais (luz, clima, sons, cheiro).",
@@ -24,15 +25,20 @@ function getStartingPrompt(heroes: Hero[], lightRule?:boolean, ambientRule?:bool
     `.trim()
 }
 
-function getPrompt(hero: Hero, historyContext: string, action: string): string {
+function getPrompt(actions: TurnActions, historyContext: string): string {
+  const heroes = actions.map(h => h.name).join(", ")
+  const heroActions = actions.map(a => a.action.slice(1)).join(", ")
   return `
   Você é um narrador de RPG de fantasia medieval.
   
-  Com base no heroí de classe ${hero.class}, em sua posição ${hero.location} e no contexto atual da história: \n\n
+  Com base nos heroís ${heroes} e no contexto atual da história:
+
   ${historyContext}
 
   \n
-  Dê continuidade nessa história com base na ação ${action.slice(1)} do jogador.`
+  Dê continuidade essa mesma campanha com base nas respectivas ações que os jogador(es)
+  tomaram nesse turno: ${heroActions}. Não adicione mais heróis na campanha, somente prosiga a 
+  história com base na(s) atitude(s) listada(s).`
 }
 
 export {getStartingPrompt, initialLocationPrompt, getPrompt}
