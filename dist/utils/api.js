@@ -7,7 +7,7 @@ class IaAPI {
             if (!process.env.URL || !process.env.APIKEY) {
                 throw new Error(`The API URL or APIKEY is ${typeof (process.env.URL)}.It must to be a string!`);
             }
-            const response = await axios.post("https://api.cohere.ai/v1/chat", {
+            const response = await axios.post(process.env.URL, {
                 model: "command-a-03-2025",
                 message: prompt,
                 temperature: 0.7,

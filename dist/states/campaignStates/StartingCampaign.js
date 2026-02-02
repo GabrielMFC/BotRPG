@@ -5,7 +5,6 @@ class StartingCampaign {
         try {
             const history = await IaAPI.getInitialHistory(campaign.heroes);
             campaign.updateLastHistoryMessage(history);
-            console.log("MENSAGEM: ", history);
             await channel.send(history + '.\n\n Digite qualquer mensagem com "!" na frente para interagir.');
             campaign.setstate(new React);
         }
