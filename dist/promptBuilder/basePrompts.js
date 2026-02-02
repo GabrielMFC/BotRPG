@@ -19,11 +19,14 @@ function getStartingPrompt(heroes, lightRule, ambientRule, initialEventRule, max
     ${initialEventRule ? rules.initialEvent : ""}
     `.trim();
 }
-function getPrompt(hero) {
+function getPrompt(hero, historyContext, action) {
     return `
   Você é um narrador de RPG de fantasia medieval.
   
-  Com base no heroí de classe ${hero.class} e em sua posição ${hero.location}. Crie uma situação
-  fantasiosa que poderia acontecer em um rpg de mesa classíco.`;
+  Com base no heroí de classe ${hero.class}, em sua posição ${hero.location} e no contexto atual da história: \n\n
+  ${historyContext}
+
+  \n
+  Dê continuidade nessa história com base na ação ${action.slice(1)} do jogador.`;
 }
 export { getStartingPrompt, initialLocationPrompt, getPrompt };

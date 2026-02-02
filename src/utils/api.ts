@@ -41,8 +41,8 @@ class IaAPI {
         return await IaAPI.axiosRequest(getStartingPrompt(heroes))
     }
 
-    static async getHistory(hero: Hero){
-        return await IaAPI.axiosRequest(getPrompt(hero))
+    static async getHistory(hero: Hero, historyContext: string, action: string){
+        return await IaAPI.axiosRequest(getPrompt(hero, historyContext, action))
     }
 }
 

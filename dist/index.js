@@ -68,7 +68,7 @@ client.on("messageCreate", (message) => {
     if (!message.content.startsWith("!") || message.content == "!eu")
         return;
     if (message.channel instanceof TextChannel) {
-        campaign.stateAct(campaign, message.channel);
+        campaign.stateAct(campaign, message);
     }
 });
 client.login(process.env.TOKEN);
