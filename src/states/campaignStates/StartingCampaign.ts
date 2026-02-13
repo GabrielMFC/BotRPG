@@ -14,7 +14,6 @@ class StartingCampaign implements CampaignState {
                 const history = await IaAPI.getInitialHistory(campaign.heroes)
                 campaign.updateLastHistoryMessage(history)
                 
-                await message.channel.send(history)
                 campaign.setstate(new PlayerRotation)
                 campaign.stateAct(campaign, message)
             }

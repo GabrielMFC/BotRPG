@@ -78,8 +78,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return
-  if (!message.content.startsWith("!") || message.content == "!eu") return
-  if(message.channel instanceof TextChannel) {
+  if (message.content == "!eu") return
+  if(message.channel instanceof TextChannel && (message.content.startsWith("!") || message.content.startsWith("?"))) {
     campaign.stateAct(campaign, message)
   }
 })

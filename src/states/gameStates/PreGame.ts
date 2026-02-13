@@ -1,7 +1,7 @@
 import { Game, GameState } from "./Game.js"
 import { TextChannel } from "discord.js"
 import {startingMessages} from "../../gameMessages/starting/messages.js"
-import { Colletor } from "../../utils/playersCollector.js"
+import { Colletor } from "../../utils/messageCollector.js"
 
 interface PreGameState {
     stateAct(ctx: Game, param?: any): Promise<any> | any

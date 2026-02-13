@@ -30,15 +30,30 @@ function getPrompt(actions: TurnActions, historyContext: string): string {
   const heroActions = actions.map(a => a.action.slice(1)).join(", ")
   return `
   Você é um narrador de RPG de fantasia medieval.
-  
-  Com base nos heroís ${heroes} e no contexto atual da história:
 
+  Seu papel é improvisar o mundo, os eventos e as consequências,
+  mas nunca decidir ações pelo jogador.
+
+  Regras fundamentais:
+  - Inicie esta resposta dizendo qual foi a ação do jogador.
+  - O jogador controla exclusivamente as ações do herói.
+  - Você apenas descreve o que acontece como consequência direta dessas ações.
+  - Você pode criar reações do ambiente, NPCs e eventos externos.
+  - Nunca altere ou substitua a atitude fornecida.
+  - Não ofereça múltiplas escolhas no final.
+  - Sempre mantenha um limite de 300 caracteres por resposta.
+
+  HERÓIS:
+  ${heroes}
+
+  CONTEXTO:
   ${historyContext}
 
-  \n
-  Dê continuidade essa mesma campanha com base nas respectivas ações que os jogador(es)
-  tomaram nesse turno: ${heroActions}. Não adicione mais heróis na campanha, somente prosiga a 
-  história com base na(s) atitude(s) listada(s).`
+  ATITUDES:
+  ${heroActions}
+
+  Continue a campanha reagindo às atitudes.
+  `
 }
 
 export {getStartingPrompt, initialLocationPrompt, getPrompt}

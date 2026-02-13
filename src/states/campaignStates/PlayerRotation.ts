@@ -1,6 +1,6 @@
 import { Message, TextChannel } from "discord.js";
 import { Campaign, CampaignState } from "./Campaign.js";
-import { Colletor } from "../../utils/playersCollector.js";
+import { Colletor } from "../../utils/messageCollector.js";
 import { React } from "./React.js";
 import { TurnActions } from "../../types/turnActions.js";
 
@@ -13,12 +13,12 @@ class PlayerRotation implements CampaignState {
             
             for(let i = 0; i < campaign.heroes.length; i++){
                 let player = campaign.heroes[i]
-                await message.channel.send(`Jogador ${player.displayName}, qual ação você 
-                irá tomar?`)
                 const playerMessage = await Colletor.playersInteractionMessageCollector(
-                    message.channel, 
-                    15_000
+                    message, 
+                    600000
                 )
+                console.log("Turn action:",message.content);
+                
                 if(playerMessage.has(campaign.heroes[i].id)){
                     actions.push({id: player.id, name: player.displayName, action: message.content})
                 }

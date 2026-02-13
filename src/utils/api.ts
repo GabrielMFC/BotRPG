@@ -17,7 +17,7 @@ class IaAPI {
                 {
                     model: "command-a-03-2025",
                     message: prompt,
-                    temperature: 0.7,
+                    temperature: 0.4,
                     max_tokens: 400,
                     prompt_truncation: "auto",
                 },

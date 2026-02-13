@@ -25,13 +25,18 @@ class Colletor {
     })
    }
 
-  public static playersInteractionMessageCollector(channel: TextChannel, duration: number): Promise<Set<string>>{
+  public static playersInteractionMessageCollector(message: Message, duration: number): Promise<Set<string>>{
 
     const player = new Set<string>
     return new Promise(resolve => {
+      if(!message.channel.isTextBased()) return
+      if(!message.inGuild()) return
+      if(!message.content.startsWith("!")) return
 
-      const collector = channel.createMessageCollector({
-        filter: (m: Message) => m.content.startsWith("!") && !m.author.bot,
+      const collector = message.channel.createMessageCollector({
+        filter: (m: Message) => m.content.startsWith("!") && 
+        !m.author.bot &&
+        m.id !== message.id && m.author.id === message.author.id,
         time: duration,
         max: 1
       })
