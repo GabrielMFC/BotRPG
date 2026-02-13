@@ -8,7 +8,7 @@ import { TurnActions } from "../../types/turnActions.js";
 class PlayerRotation implements CampaignState {
     async stateAct(campaign: Campaign, message: Message): Promise<void> {
         let actions = []
-        if(message.channel instanceof TextChannel){
+        if(message.channel instanceof TextChannel && !campaign.isActiveTurn){
             console.log("Current State: PLayerRotation");
             
             for(let i = 0; i < campaign.heroes.length; i++){
@@ -23,6 +23,7 @@ class PlayerRotation implements CampaignState {
                     actions.push({id: player.id, name: player.displayName, action: message.content})
                 }
             }
+            campaign.isActiveTurn = !campaign.isActiveTurn
         }
         const react = new React()
         react.stateAct(campaign, message, actions as TurnActions)

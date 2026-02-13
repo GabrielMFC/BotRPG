@@ -10,6 +10,7 @@ class Campaign implements CampaignState{
     state: CampaignState = new NotStarted
     heroes: Hero[]
     lastHistoryMessage: string = ""
+    isActiveTurn: boolean = false
 
     constructor(heroes: Hero[]){
         this.heroes = heroes
