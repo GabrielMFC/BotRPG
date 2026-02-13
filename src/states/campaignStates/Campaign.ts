@@ -1,9 +1,10 @@
 import { NotStarted } from "./notStarted.js"
 import { Hero } from "../gameStates/Game.js"
 import { Interaction, Message, TextChannel } from "discord.js"
+import { TurnActions } from "../../types/turnActions.js"
 
 interface CampaignState {
-    stateAct(campaign: Campaign | CampaignState, channel?: Message | TextChannel): void
+    stateAct(campaign: Campaign | CampaignState, channel?: Message | TextChannel, actions?: TurnActions): void
 }
 
 class Campaign implements CampaignState{
@@ -24,8 +25,8 @@ class Campaign implements CampaignState{
         this.lastHistoryMessage = message
     }
 
-    stateAct(campaign: Campaign, channel?: Message | TextChannel): void {
-        this.state.stateAct(campaign, channel)
+    stateAct(campaign: Campaign, channel?: Message | TextChannel, actions?: TurnActions): void {
+        this.state.stateAct(campaign, channel, actions)
     }
 }
 

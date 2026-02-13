@@ -4,7 +4,7 @@ import { IaAPI } from "../../utils/api.js";
 import { TurnActions } from "../../types/turnActions.js";
 import { PlayerRotation } from "./PlayerRotation.js";
 
-class React{
+class React implements CampaignState{
     async stateAct(campaign: Campaign, message: Message, actions: TurnActions): Promise<void> {
         if(message.channel instanceof TextChannel){
             console.log("Current State: React");
